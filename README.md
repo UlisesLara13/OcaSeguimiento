@@ -21,7 +21,7 @@ Permite buscar el historial de un envío mediante:
 ---
 
 ## 📂 Estructura del Proyecto
-
+```bash
 src/
 ├── app/
 │ ├── components/
@@ -42,13 +42,13 @@ src/
 ├── proxy.conf.json
 ├── index.html
 └── main.ts
+```
 
 ## ⚙️ Instalación y Ejecución
 
  1️⃣ Clonar el repositorio
 ```bash
 git clone https://github.com/tuusuario/oca-tracking-angular.git
-cd oca-tracking-angular
 ```
 
 ### 2️⃣ Instalar dependencias
@@ -57,8 +57,9 @@ npm install
 
 ### 3️⃣ Ejecutar la aplicación (Necesario utilizar el proxy si lo pruebas localmente)
 
+```bash
 ng serve --proxy-config proxy.conf.json
-
+```
 
 📡 Ejemplo de uso de la API de OCA
 
