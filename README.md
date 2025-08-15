@@ -46,14 +46,17 @@ src/
 
 ## ⚙️ Instalación y Ejecución
 
- 1️⃣ Clonar el repositorio
+### 1️⃣ Clonar el repositorio
+
 ```bash
-git clone https://github.com/tuusuario/oca-tracking-angular.git
+git clone https://github.com/UlisesLara13/OcaSeguimiento.git
 ```
 
 ### 2️⃣ Instalar dependencias
 
+```bash
 npm install
+```
 
 ### 3️⃣ Ejecutar la aplicación (Necesario utilizar el proxy si lo pruebas localmente)
 
