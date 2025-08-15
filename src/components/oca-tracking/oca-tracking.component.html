@@ -1,0 +1,129 @@
+<div class="oca-tracking-container">
+  <div class="header">
+    <h1 class="title">
+      <span class="oca-logo">📦</span>
+      Seguimiento OCA
+    </h1>
+    <p class="subtitle">Rastrea tu envío ingresando los datos requeridos</p>
+  </div>
+
+  <div class="search-form">
+    <form [formGroup]="trackingForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="documento">Nro. Documento Cliente</label>
+          <input
+            id="documento"
+            type="text"
+            formControlName="NroDocumentoCliente"
+            placeholder="Ej: 12345678"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cuit">CUIT</label>
+          <input
+            id="cuit"
+            type="text"
+            formControlName="CUIT"
+            placeholder="Ej: 20254458896"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="pieza">Nro. de Envío</label>
+          <input
+            id="pieza"
+            type="text"
+            formControlName="Pieza"
+            placeholder="Ej: 3654000000001546446"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="isLoading || !isFormValid()"
+        >
+          <span *ngIf="isLoading" class="loader"></span>
+          {{ isLoading ? 'Buscando...' : 'Rastrear Envío' }}
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn-secondary"
+          (click)="clearForm()"
+          [disabled]="isLoading"
+        >
+          Limpiar
+        </button>
+      </div>
+    </form>
+
+  <div class="results-section" *ngIf="trackingData.length > 0 || error">
+    <div *ngIf="error" class="error-message">
+      <span class="error-icon">⚠️</span>
+      {{ error }}
+    </div>
+
+    <div *ngIf="trackingData.length > 0" class="tracking-results">
+      <div class="results-header">
+        <h2>📍 Historial de Seguimiento</h2>
+        <span class="package-number">Envío: {{ trackingData[0].NumeroEnvio }}</span>
+      </div>
+
+      <div class="timeline">
+        <div 
+          *ngFor="let item of parsedData; let i = index" 
+          class="timeline-item"
+          [ngClass]="'status-' + item.estado"
+        >
+          <div class="timeline-marker">
+            <span class="marker-icon">{{ getStatusIcon(item.estado) }}</span>
+          </div>
+          
+          <div class="timeline-content">
+            <div class="timeline-header">
+              <h3 class="status-title">{{ item.Desdcripcion_Estado }}</h3>
+              <span class="status-date">{{ formatDate(item.fechaParsed) }}</span>
+            </div>
+            
+            <div class="status-details">
+              <p class="status-location">{{ item.SUC }}</p>
+              <p class="status-reason" *ngIf="item.Descripcion_Motivo !== 'Sin Motivo'">
+                Motivo: {{ item.Descripcion_Motivo }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracking-summary">
+        <div class="summary-item">
+          <span class="summary-label">Estado Actual:</span>
+          <span class="summary-value current-status" [ngClass]="'status-' + parsedData[0].estado">
+            {{ parsedData[0].Desdcripcion_Estado }}
+          </span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Última Actualización:</span>
+          <span class="summary-value">{{ formatDate(parsedData[0].fechaParsed) }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total de Movimientos:</span>
+          <span class="summary-value">{{ trackingData.length }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && trackingData.length === 0 && !error" class="empty-state">
+    <div class="empty-icon">🔍</div>
+    <h3>Ingresa los datos para rastrear tu envío</h3>
+  </div>
+</div>

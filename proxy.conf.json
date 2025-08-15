@@ -1,0 +1,14 @@
+{
+  "/api/oca/*": {
+    "target": "http://webservice.oca.com.ar",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "pathRewrite": {
+      "^/api/oca": "/ePak_tracking/Oep_TrackEPak.asmx"
+    }
+  }
+}
